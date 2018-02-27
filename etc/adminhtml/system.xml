@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * IDEALIAGroup srl
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to info@idealiagroup.com so we can send you a copy immediately.
+ *
+ * @category   Adspray
+ * @package    Adspray_Adabra
+ * @copyright  Copyright (c) 2016 IDEALIAGroup srl (http://www.idealiagroup.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="adspray_adabra" translate="label" sortOrder="200">
+            <label><![CDATA[<span class="adabra-logo-config"></span><span>Adabra</span>]]></label>
+        </tab>
+
+        <section id="adabra_feed" showInDefault="1" showInWebsite="0" showInStore="0">
+            <class>separator-top</class>
+            <label>Adabra Feed</label>
+            <tab>adspray_adabra</tab>
+            <resource>Adspray_Adabra::config</resource>
+
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>General</label>
+                <field id="use_cron" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Use Magento Cron</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[
+                        If you set this value to "No", you will have to manually configure your crontab
+                        using the bin/magento script.
+                    ]]></comment>
+                </field>
+                <field id="compress" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Apply GZIP compression</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="rebuild_time" translate="label comment" type="multiselect" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Rebuild time</label>
+                    <source_model>Adspray\Adabra\Model\Source\RebuildTime</source_model>
+                </field>
+                <field id="base_media_url" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Base media url</label>
+                    <source_model>\Adspray\Adabra\Model\Source\MediaPath</source_model>
+                </field>
+            </group>
+
+            <group id="http" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>HTTP Download</label>
+                <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>HTTP Download Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="user" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Auth user</label>
+                </field>
+                <field id="pass" translate="label comment" type="password" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Auth pass</label>
+                </field>
+            </group>
+
+            <group id="ftp" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>FTP Upload</label>
+                <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Upload via FTP</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="user" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>FTP user</label>
+                </field>
+                <field id="pass" translate="label comment" type="password" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>FTP pass</label>
+                </field>
+                <field id="host" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>FTP host</label>
+                </field>
+                <field id="path" translate="label comment" type="text" sortOrder="50" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>FTP path</label>
+                </field>
+                <field id="ssl" translate="label comment" type="select" sortOrder="60" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>FTP SSL mode</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="passive" translate="label comment" type="select" sortOrder="70" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>FTP Passive mode</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+
+            <group id="order" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Order Export</label>
+                <field id="states" translate="label comment" type="multiselect" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Export States</label>
+                    <source_model>Adspray\Adabra\Model\Source\OrderStates</source_model>
+                </field>
+            </group>
+
+            <group id="batch_size" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Export batch sizes</label>
+                <field id="product" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Products batch size</label>
+                    <comment>Set 0 to disable</comment>
+                </field>
+                <field id="category" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Categories batch size</label>
+                    <comment>Set 0 to disable</comment>
+                </field>
+                <field id="customer" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Customers batch size</label>
+                    <comment>Set 0 to disable</comment>
+                </field>
+                <field id="order" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Orders batch size</label>
+                    <comment>Set 0 to disable</comment>
+                </field>
+            </group>
+
+        </section>
+
+        <section id="adabra_tracking" showInDefault="1" showInWebsite="0" showInStore="0" sortOrder="4">
+            <label>Adabra Tracking</label>
+            <tab>adspray_adabra</tab>
+            <resource>Adspray_Adabra::config</resource>
+
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>General</label>
+                <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="tracking_url" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Tracking url</label>
+                    <comment>Provided by Adabra, use staging.marketingspray.com/tracking for testing</comment>
+                </field>
+                <field id="site_id" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Site id</label>
+                    <comment>Provided by Adabra</comment>
+                </field>
+                <field id="catalog_id" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Catalog id</label>
+                    <comment>Provided by Adabra</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

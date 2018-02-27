@@ -1,0 +1,33 @@
+/**
+ * IDEALIAGroup srl
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to info@idealiagroup.com so we can send you a copy immediately.
+ *
+ * @category   Adspray
+ * @package    Adspray_Adabra
+ * @copyright  Copyright (c) 2016 IDEALIAGroup srl (http://www.idealiagroup.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+
+.adabra-logo-config {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAAASCAYAAAA31qwVAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AYDCAU68g2XIwAAAtFJREFUSMfN1V2IVVUYBuDnnPaYkz+TyqD5U5SS/W6KiE0zNw1FWhRBkFJpUEQaG3/CpGS8K4huIqp92T8URhR0URFzUajgjlFiU5HURF5EDl6Ukzk0muPNd2gznLFxoKEPNmfvdb611vu97/utxTQjK6p3sqK69F/S5k53/eZ5gmn93owNmH+O9EU4OCPAyjxtvT6Dn+KZLDZgyX8OrMbW1bgNO8s8PdkabxMP4r3pAkumMecxVPhsAov16MINAW6qcSH+Om/GyjyVFdVirEGB0XOwdRf2YWiKy1+A3XgrivoH2MRN6t+19z4cx1dlno5PwhbcF+CnGn/jB3wU/t1al7KRFVUSYMfKPB3PiqolVQPj6MEgjeFapR04HU8rbsTDYZUzWIa1+BTz8CTexRexdkd8n8YBnGkGI0kYegCHkdbk68SarKj2YYtG4/Myv/4kLsdrIVd/DVQf9mIlPsAnWIF7cU/M68QDkb828gexGrfgtyQrqgYewaN4Bd2YHeMd2BWTf8H+iy5ZdRi9kfsh3kRWA3Z7sPJQNMn9WBCH7aqQawBLsTUa5AVchjlRyKlmMLUJj+MUNqNR5uk41uNO3IGBZjLryOBTvfPxYnjhY+wIdlrRGz7chavCa124CV9iGGPxvTHOuwXBYEerM5t4Hsei0nU4hJ9jkydwoMzT39GTzFt48I+hQxvDrFkAX4z3Iz/Fd9iDbcH0EmwJi3wTXoVXY2xddPq3+DH+60nCoN0xOBRVLMyKqg/LcV1WVBfjymRO1xvhl6UYxevByhW4Fi+FgTeHj3bgaAB7uc1NsSKs8H1I3h3FHk9wa3TGSDDYHTLtCZn7Q4oTo78ODeNpPIsTIclz2B6+2hSydOJr/IlZuLsNqGuiY0cwO/btx9vY25h4VrU7m7KiWo2d2F3m6VEzEEmbC3qy66IZssxITPVKGsORONf+V8BGoqNmLM4CifHPqEelWKUAAAAASUVORK5CYII=');
+    background-repeat: no-repeat;
+    display: inline-block;
+    background-size: auto 18px;
+    padding-left:40px;
+    height: 18px;
+    margin-top: -3px;
+    position: absolute;
+}
+
+.adabra-logo-config + span {
+    padding-left: 48px;
+}

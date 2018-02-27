@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="adabra.tracking">
+            <block class="Adspray\Adabra\Block\Tracking\Category" template="Adspray_Adabra::tracking/category.phtml" name="adabra.tracking.category" as="adabra_tracking_category" />
+        </referenceBlock>
+    </body>
+</page>

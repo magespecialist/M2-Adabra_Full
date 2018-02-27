@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * IDEALIAGroup srl
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to info@idealiagroup.com so we can send you a copy immediately.
+ *
+ * @category   Adspray
+ * @package    Adspray_Adabra
+ * @copyright  Copyright (c) 2016 IDEALIAGroup srl (http://www.idealiagroup.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <adabra_feed>
+            <general>
+                <use_cron>1</use_cron>
+                <compress>0</compress>
+                <rebuild_time>0,18</rebuild_time>
+                <base_media_url>media</base_media_url>
+            </general>
+            <http>
+                <enabled>0</enabled>
+                <user></user>
+                <pass></pass>
+            </http>
+            <ftp>
+                <enabled>0</enabled>
+                <user></user>
+                <pass></pass>
+                <host></host>
+                <port>21</port>
+                <path></path>
+                <ssl>0</ssl>
+                <passive>0</passive>
+            </ftp>
+            <batch_size>
+                <product>1000</product>
+                <order>500</order>
+                <customer>1000</customer>
+                <category>100</category>
+            </batch_size>
+            <order>
+                <states>closed,complete</states>
+            </order>
+        </adabra_feed>
+    </default>
+</config>

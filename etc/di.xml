@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * IDEALIAGroup srl
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to info@idealiagroup.com so we can send you a copy immediately.
+ *
+ * @category   Adspray
+ * @package    Adspray_Adabra
+ * @copyright  Copyright (c) 2016 IDEALIAGroup srl (http://www.idealiagroup.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <preference for="Adspray\Adabra\Api\Data\FeedInterface" type="Adspray\Adabra\Model\Feed" />
+    <preference for="Adspray\Adabra\Api\FeedManagerInterface" type="Adspray\Adabra\Model\FeedManager" />
+    <preference for="Adspray\Adabra\Model\Tracking\StorageInterface" type="Adspray\Adabra\Model\Tracking\Storage" />
+
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="adspray_adabra_feed_run" xsi:type="object">Adspray\Adabra\Command\Run</item>
+                <item name="adspray_adabra_feed_rebuild" xsi:type="object">Adspray\Adabra\Command\Rebuild</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Catalog\Model\ResourceModel\AbstractResource">
+        <plugin sortOrder="1" name="adsprayAdabraAbstractResource"
+                type="Adspray\Adabra\Plugin\Model\ResourceModel\AbstractResourcePlugin"/>
+    </type>
+
+    <type name="Magento\Config\Model\Config\TypePool">
+        <arguments>
+            <argument name="sensitive" xsi:type="array">
+                <item name="adabra_feed/ftp/user" xsi:type="string">1</item>
+                <item name="adabra_feed/ftp/pass" xsi:type="string">1</item>
+                <item name="adabra_feed/http/user" xsi:type="string">1</item>
+                <item name="adabra_feed/http/pass" xsi:type="string">1</item>
+            </argument>
+            <argument name="environment" xsi:type="array">
+                <item name="adabra_tracking/general/enabled" xsi:type="string">1</item>
+                <item name="adabra_tracking/general/site_id" xsi:type="string">1</item>
+                <item name="adabra_tracking/general/catalog_id" xsi:type="string">1</item>
+                <item name="adabra_feed/ftp/enabled" xsi:type="string">1</item>
+                <item name="adabra_feed/ftp/host" xsi:type="string">1</item>
+                <item name="adabra_feed/ftp/path" xsi:type="string">1</item>
+                <item name="adabra_feed/ftp/ssl" xsi:type="string">1</item>
+                <item name="adabra_feed/ftp/passive" xsi:type="string">1</item>
+                <item name="adabra_feed/http/enabled" xsi:type="string">1</item>
+            </argument>
+        </arguments>
+    </type>
+
+
+</config>
