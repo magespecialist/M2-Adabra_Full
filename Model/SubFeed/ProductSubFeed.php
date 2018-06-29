@@ -12,10 +12,10 @@
  * obtain it through the world-wide-web, please send an email
  * to info@idealiagroup.com so we can send you a copy immediately.
  *
- * @category   Adspray
- * @package    Adspray_Adabra
- * @copyright  Copyright (c) 2016 IDEALIAGroup srl (http://www.idealiagroup.com)
- * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @category  Adspray
+ * @package   Adspray_Adabra
+ * @copyright Copyright (c) 2016 IDEALIAGroup srl (http://www.idealiagroup.com)
+ * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
 namespace Adspray\Adabra\Model\SubFeed;
@@ -24,6 +24,7 @@ use Adspray\Adabra\Api\Data\SubFeedInterface;
 use Adspray\Adabra\Helper\Data as DataHelper;
 use Adspray\Adabra\Helper\Ftp as FtpHelper;
 use Adspray\Adabra\Helper\Filesystem;
+use Adspray\Adabra\Model\Config;
 use Magento\Bundle\Model\ResourceModel\Selection as BundleSelection;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Model\Product;
@@ -31,8 +32,11 @@ use Magento\CatalogInventory\Api\StockConfigurationInterface;
 use Magento\CatalogInventory\Api\StockStateInterface;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable;
 use Magento\Downloadable\Model\Product\Type as DownloadableType;
+use Magento\Eav\Api\AttributeRepositoryInterface;
+use Magento\Eav\Model\AttributeRepository;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\ResourceConnection;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\File\Csv;
 use Magento\Framework\Filesystem\Io\File;
 use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory;
@@ -62,7 +66,32 @@ class ProductSubFeed extends AbstractSubFeed implements SubFeedInterface
      * @var ScopeConfigInterface
      */
     protected $scopeConfig;
+    /**
+     * @var AttributeRepositoryInterface
+     */
+    private $attributeRepository;
 
+    /**
+     * ProductSubFeed constructor.
+     * @param File $file
+     * @param Csv $csv
+     * @param Filesystem $filesystem
+     * @param DataHelper $dataHelper
+     * @param FtpHelper $ftpHelper
+     * @param DirectoryHelperData $directoryHelperData
+     * @param DateTime $dateTime
+     * @param CollectionFactory $collectionFactory
+     * @param CategoryRepositoryInterface $categoryRepository
+     * @param MediaConfig $mediaConfig
+     * @param \Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable $configurableResourceModel
+     * @param BundleSelection $bundleSelection
+     * @param GroupedType $groupedType
+     * @param StockStateInterface $stockState
+     * @param ResourceConnection $resourceConnection
+     * @param StockConfigurationInterface $stockConfiguration
+     * @param ScopeConfigInterface $scopeConfig
+     * @param AttributeRepositoryInterface $attributeRepository
+     */
     public function __construct(
         File $file,
         Csv $csv,
@@ -80,7 +109,8 @@ class ProductSubFeed extends AbstractSubFeed implements SubFeedInterface
         StockStateInterface $stockState,
         ResourceConnection $resourceConnection,
         StockConfigurationInterface $stockConfiguration,
-        ScopeConfigInterface $scopeConfig
+        ScopeConfigInterface $scopeConfig,
+        AttributeRepositoryInterface $attributeRepository
     ) {
         parent::__construct($file, $csv, $filesystem, $dataHelper, $ftpHelper, $directoryHelperData, $dateTime);
 
@@ -94,12 +124,14 @@ class ProductSubFeed extends AbstractSubFeed implements SubFeedInterface
         $this->resourceConnection = $resourceConnection;
         $this->stockConfiguration = $stockConfiguration;
         $this->scopeConfig = $scopeConfig;
+        $this->attributeRepository = $attributeRepository;
     }
 
     /**
      * Get virtual field value
-     * @param Product $product
-     * @param $field
+     *
+     * @param  Product $product
+     * @param  $field
      * @return string
      */
     public function getVirtualField(Product $product, $field)
@@ -110,6 +142,7 @@ class ProductSubFeed extends AbstractSubFeed implements SubFeedInterface
 
     /**
      * Get headers
+     *
      * @return array
      */
     protected function getHeaders()
@@ -158,6 +191,7 @@ class ProductSubFeed extends AbstractSubFeed implements SubFeedInterface
 
     /**
      * Prepare feed collection
+     *
      * @return void
      */
     protected function prepareCollection()
@@ -169,7 +203,7 @@ class ProductSubFeed extends AbstractSubFeed implements SubFeedInterface
             ->addAttributeToSelect('*')
             ->addWebsiteFilter($this->getFeed()->getStore()->getWebsiteId())
             ->addUrlRewrite()
-//            ->addPriceData(0, $this->getStore()->getWebsiteId()) // This filters out out-of-stock products
+        //            ->addPriceData(0, $this->getStore()->getWebsiteId()) // This filters out out-of-stock products
             ->addCategoryIds();
 
         // Add stock information
@@ -184,7 +218,8 @@ class ProductSubFeed extends AbstractSubFeed implements SubFeedInterface
 
     /**
      * Get category name
-     * @param $categoryId
+     *
+     * @param  $categoryId
      * @return string
      */
     protected function getCategoryName($categoryId)
@@ -199,7 +234,8 @@ class ProductSubFeed extends AbstractSubFeed implements SubFeedInterface
 
     /**
      * Get product children ids
-     * @param Product $product
+     *
+     * @param  Product $product
      * @return array|null
      */
     protected function getProductChildrenIds(Product $product)
@@ -225,7 +261,8 @@ class ProductSubFeed extends AbstractSubFeed implements SubFeedInterface
 
     /**
      * Get stock qty for a given product
-     * @param Product $product
+     *
+     * @param  Product $product
      * @return float|boolean
      */
     protected function getStockQty(Product $product)
@@ -240,9 +277,45 @@ class ProductSubFeed extends AbstractSubFeed implements SubFeedInterface
         return $useStock ? $product->getQty() : 999999;
     }
 
+
+    /**
+     * Get custom tags list
+     *
+     * @param Product $product
+     * @return string
+     * @throws NoSuchEntityException
+     */
+    protected function getCustomTagsList(Product $product)
+    {
+        $tagList = [];
+        $tagsListArray = $this->dataHelper->getFeedTagsList();
+        foreach ($tagsListArray as $tag) {
+            $tag = trim($tag);
+            if ($product->getData($tag) || $product->getAttributeText($tag)) {
+                if ($product->getAttributeText($tag) === false) {
+                    $tagList[] = $product->getData($tag);
+                } else if (
+                    $this->attributeRepository
+                        ->get(Product::ENTITY, $tag)
+                        ->getFrontendInput() === 'boolean'
+                ) {
+                    if ($product->getAttributeText($tag)->__toString() === 'Yes') {
+                        $tagList[] = $tag;
+                    }
+                } else {
+                    $tagList[] = $product->getAttributeText($tag);
+                }
+            }
+        }
+        
+        return implode("|", $tagList);
+    }
+
+
     /**
      * Get stock sum for children products
-     * @param Product $product
+     *
+     * @param  Product $product
      * @return float|null
      */
     protected function getStockSum(Product $product)
@@ -291,12 +364,15 @@ class ProductSubFeed extends AbstractSubFeed implements SubFeedInterface
 
     /**
      * Get feed row for entity
-     * @param $entity
+     *
+     * @param  $entity
      * @return array
      */
     protected function getFeedRow($entity)
     {
-        /** @var $product Product */
+        /**
+ * @var $product Product 
+*/
         $product = $entity;
 
         // Fetch categories
@@ -325,9 +401,11 @@ class ProductSubFeed extends AbstractSubFeed implements SubFeedInterface
         ) && $product->getStatus();
 
         // Fetch shippable information
-        $shippable = !in_array($product->getTypeId(), [
+        $shippable = !in_array(
+            $product->getTypeId(), [
             Product\Type::TYPE_VIRTUAL,
-        ]);
+            ]
+        );
 
         // Fetch product's availability
         $availability = $product->isSaleable() ? '1' : '0';
@@ -346,15 +424,21 @@ class ProductSubFeed extends AbstractSubFeed implements SubFeedInterface
         $qty = $this->getStockQty($product);
 
         // Fetch product qty
-        if (!in_array($product->getTypeId(), [
+        if (!in_array(
+            $product->getTypeId(), [
             Product\Type::TYPE_SIMPLE,
             Product\Type::TYPE_VIRTUAL,
             DownloadableType::TYPE_DOWNLOADABLE,
-        ])) {
+            ]
+        )
+        ) {
             if ($qty !== false) {
                 $qty = $this->getStockSum($product);
             }
         }
+
+        // Get tags lists
+        $tagsList = $this->getCustomTagsList($product);
 
         return [[
             $product->getSku(),
@@ -393,7 +477,7 @@ class ProductSubFeed extends AbstractSubFeed implements SubFeedInterface
             $this->getVirtualField($product, 'MUZEID'),
             $this->getVirtualField($product, 'MPN'),
             implode('|', $relatedSkus),
-            '',
+            $tagsList,
             implode('|', $categories),
         ]];
     }

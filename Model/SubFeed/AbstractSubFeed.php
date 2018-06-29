@@ -12,10 +12,10 @@
  * obtain it through the world-wide-web, please send an email
  * to info@idealiagroup.com so we can send you a copy immediately.
  *
- * @category   Adspray
- * @package    Adspray_Adabra
- * @copyright  Copyright (c) 2016 IDEALIAGroup srl (http://www.idealiagroup.com)
- * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @category  Adspray
+ * @package   Adspray_Adabra
+ * @copyright Copyright (c) 2016 IDEALIAGroup srl (http://www.idealiagroup.com)
+ * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
 namespace Adspray\Adabra\Model\SubFeed;
@@ -69,6 +69,7 @@ abstract class AbstractSubFeed implements SubFeedInterface
 
     /**
      * Get feed code
+     *
      * @return string
      */
     public function getCode()
@@ -78,6 +79,7 @@ abstract class AbstractSubFeed implements SubFeedInterface
 
     /**
      * Get feed file name
+     *
      * @return string
      */
     public function getFeedFileName()
@@ -87,8 +89,9 @@ abstract class AbstractSubFeed implements SubFeedInterface
 
     /**
      * Get exported filename
-     * @param $chunked
-     * @param bool $compressed
+     *
+     * @param  $chunked
+     * @param  bool    $compressed
      * @return string
      */
     public function getExportFile($chunked, $compressed = false)
@@ -99,6 +102,7 @@ abstract class AbstractSubFeed implements SubFeedInterface
 
     /**
      * Get progress file name
+     *
      * @return string
      */
     protected function getPositionFileName()
@@ -108,7 +112,8 @@ abstract class AbstractSubFeed implements SubFeedInterface
 
     /**
      * Set parent feed
-     * @param FeedInterface $feed
+     *
+     * @param  FeedInterface $feed
      * @return $this
      */
     public function setFeed(FeedInterface $feed)
@@ -119,6 +124,7 @@ abstract class AbstractSubFeed implements SubFeedInterface
 
     /**
      * Get parent feed
+     *
      * @return FeedInterface
      */
     public function getFeed()
@@ -128,6 +134,7 @@ abstract class AbstractSubFeed implements SubFeedInterface
 
     /**
      * Get current build status
+     *
      * @return string
      */
     public function getBuildStatus()
@@ -137,6 +144,7 @@ abstract class AbstractSubFeed implements SubFeedInterface
 
     /**
      * Get sub-feed type
+     *
      * @return string
      */
     public function getType()
@@ -146,6 +154,7 @@ abstract class AbstractSubFeed implements SubFeedInterface
 
     /**
      * Load last position id
+     *
      * @return void
      */
     protected function loadPosition()
@@ -161,6 +170,7 @@ abstract class AbstractSubFeed implements SubFeedInterface
 
     /**
      * Save last position
+     *
      * @return void
      */
     protected function savePosition()
@@ -170,7 +180,8 @@ abstract class AbstractSubFeed implements SubFeedInterface
 
     /**
      * Set last position
-     * @param $position
+     *
+     * @param  $position
      * @return $this
      */
     protected function setLastId($position)
@@ -181,6 +192,7 @@ abstract class AbstractSubFeed implements SubFeedInterface
 
     /**
      * Get last position
+     *
      * @return int
      */
     protected function getLastId()
@@ -190,7 +202,8 @@ abstract class AbstractSubFeed implements SubFeedInterface
 
     /**
      * Change current sub-feed status
-     * @param $status
+     *
+     * @param  $status
      * @return $this
      */
     protected function changeBuildStatus($status)
@@ -201,25 +214,29 @@ abstract class AbstractSubFeed implements SubFeedInterface
 
     /**
      * Get headers
+     *
      * @return array
      */
     abstract protected function getHeaders();
 
     /**
      * Prepare feed collection
+     *
      * @return void
      */
     abstract protected function prepareCollection();
 
     /**
      * Get feed row for entity
-     * @param $entity
+     *
+     * @param  $entity
      * @return array
      */
     abstract protected function getFeedRow($entity);
 
     /**
      * Get virtual rows
+     *
      * @return array
      */
     protected function getVirtualRows()
@@ -229,6 +246,7 @@ abstract class AbstractSubFeed implements SubFeedInterface
 
     /**
      * Get collection ID field Name
+     *
      * @return string
      */
     protected function getIdFieldName()
@@ -292,6 +310,7 @@ abstract class AbstractSubFeed implements SubFeedInterface
 
     /**
      * Get collection
+     *
      * @return Collection
      */
     protected function getCollection()
@@ -308,7 +327,8 @@ abstract class AbstractSubFeed implements SubFeedInterface
 
     /**
      * Convert to boolean
-     * @param $val
+     *
+     * @param  $val
      * @return string
      */
     protected function toBoolean($val)
@@ -318,8 +338,9 @@ abstract class AbstractSubFeed implements SubFeedInterface
 
     /**
      * Convert to currency
-     * @param $val
-     * @param $currencyConvert
+     *
+     * @param  $val
+     * @param  $currencyConvert
      * @return string
      */
     protected function toCurrency($val, $currencyConvert = false)
@@ -363,8 +384,8 @@ abstract class AbstractSubFeed implements SubFeedInterface
         foreach ($chunkFiles as $chunkFile) {
             $chunkFileName = $this->filesystem->getExportPath() . '/' . $chunkFile['text'];
 
-            if ((strpos($chunkFileName, $fileName) !== false) &&
-                preg_match('/\.(\d+)$/', $chunkFileName, $matches)
+            if ((strpos($chunkFileName, $fileName) !== false) 
+                && preg_match('/\.(\d+)$/', $chunkFileName, $matches)
             ) {
                 $chunks[intval($matches[1])] = $chunkFileName;
             }
@@ -401,7 +422,8 @@ abstract class AbstractSubFeed implements SubFeedInterface
 
     /**
      * Convert value to timestamp (format 2)
-     * @param $ts
+     *
+     * @param  $ts
      * @return string
      */
     protected function toTimestamp2($ts)
@@ -411,7 +433,8 @@ abstract class AbstractSubFeed implements SubFeedInterface
 
     /**
      * Convert value to timestamp (format 1)
-     * @param $ts
+     *
+     * @param  $ts
      * @return string
      */
     protected function toTimestamp($ts)
@@ -421,7 +444,8 @@ abstract class AbstractSubFeed implements SubFeedInterface
 
     /**
      * Get feed content
-     * @param $compress
+     *
+     * @param  $compress
      * @return string
      */
     public function getFeedContent($compress = false)
@@ -436,6 +460,7 @@ abstract class AbstractSubFeed implements SubFeedInterface
 
     /**
      * Export feed
+     *
      * @return void
      */
     public function export()
@@ -450,7 +475,7 @@ abstract class AbstractSubFeed implements SubFeedInterface
         $csvData = [];
 
         $collection = $this->getCollection();
-        foreach ($collection as $entity) {
+        foreach ($collection->getItems() as $entity) {
             $csvLines = $this->getFeedRow($entity);
             foreach ($csvLines as $csvLine) {
                 $csvData[] = $csvLine;

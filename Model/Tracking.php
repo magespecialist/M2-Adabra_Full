@@ -12,8 +12,8 @@
  * obtain it through the world-wide-web, please send an email
  * to info@idealiagroup.com so we can send you a copy immediately.
  *
- * @copyright  Copyright (c) 2017 IDEALIAGroup srl (http://www.idealiagroup.com)
- * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @copyright Copyright (c) 2017 IDEALIAGroup srl (http://www.idealiagroup.com)
+ * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
 namespace Adspray\Adabra\Model;
@@ -31,6 +31,7 @@ class Tracking
     const TRACK_PAGE_VIEW = 'trkPageView';
     const TRACK_CATEGORY_VIEW = "trkCategoryView";
     const TRACK_PRODUCT_VIEW = 'trkProductView';
+    const TRACK_TAGS_LIST = 'trkTagsList';
     const TRACK_ADD_TO_CART = 'trkProductBasketAdd';
     const TRACK_REMOVE_FROM_CART = 'trkProductBasketRemove';
     const TRACK_PRODUCT_SALE = 'trkProductSale';
@@ -93,7 +94,9 @@ class Tracking
 
         foreach ($order->getAllVisibleItems() as $item) {
 
-            /** @var Order\Item $item */
+            /**
+ * @var Order\Item $item 
+*/
 
             if ($item->getProduct()->getTypeId() != 'simple') {
                 continue;

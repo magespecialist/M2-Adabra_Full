@@ -12,10 +12,10 @@
  * obtain it through the world-wide-web, please send an email
  * to info@idealiagroup.com so we can send you a copy immediately.
  *
- * @category   Adspray
- * @package    Adspray_Adabra
- * @copyright  Copyright (c) 2016 IDEALIAGroup srl (http://www.idealiagroup.com)
- * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @category  Adspray
+ * @package   Adspray_Adabra
+ * @copyright Copyright (c) 2016 IDEALIAGroup srl (http://www.idealiagroup.com)
+ * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
 namespace Adspray\Adabra\Helper;
@@ -50,6 +50,9 @@ class Data
     const XML_PATH_SITE_ID = 'adabra_tracking/general/site_id';
     const XML_PATH_CATALOG_ID = 'adabra_tracking/general/catalog_id';
 
+    const XML_PATH_FEED_TAGS_LIST = 'adabra_feed/tags/tags_list';
+    const XML_PATH_TRACKING_TAGS_LIST = 'adabra_tracking/tags/tags_list';
+
     protected $scopeConfig;
     protected $feed;
 
@@ -63,6 +66,7 @@ class Data
 
     /**
      * Get products batch size
+     *
      * @return bool
      */
     public function getCompress()
@@ -72,7 +76,8 @@ class Data
 
     /**
      * Get batch size for a sub-feed
-     * @param $subFeedType
+     *
+     * @param  $subFeedType
      * @return int
      */
     public function getBatchSize($subFeedType)
@@ -85,7 +90,8 @@ class Data
 
     /**
      * Return true if batch is enabled for a sub-feed
-     * @param $subFeedType
+     *
+     * @param  $subFeedType
      * @return bool
      */
     public function isBatchEnabled($subFeedType)
@@ -95,6 +101,7 @@ class Data
 
     /**
      * Get order states for export
+     *
      * @return array
      */
     public function getOrderStates()
@@ -104,6 +111,7 @@ class Data
 
     /**
      * Is http download enabled
+     *
      * @return bool
      */
     public function isHttpEnabled()
@@ -117,6 +125,7 @@ class Data
 
     /**
      * Get auth username
+     *
      * @return string
      */
     public function getHttpAuthUser()
@@ -126,6 +135,7 @@ class Data
 
     /**
      * Get auth password
+     *
      * @return string
      */
     public function getHttpAuthPassword()
@@ -135,6 +145,7 @@ class Data
 
     /**
      * Get FTP user
+     *
      * @return string
      */
     public function getFtpUser()
@@ -144,6 +155,7 @@ class Data
 
     /**
      * Get FTP pass
+     *
      * @return string
      */
     public function getFtpPass()
@@ -153,6 +165,7 @@ class Data
 
     /**
      * Get FTP path
+     *
      * @return string
      */
     public function getFtpPath()
@@ -162,6 +175,7 @@ class Data
 
     /**
      * Get FTP host
+     *
      * @return string
      */
     public function getFtpHost()
@@ -171,6 +185,7 @@ class Data
 
     /**
      * Get FTP port
+     *
      * @return int
      */
     public function getFtpPort()
@@ -180,6 +195,7 @@ class Data
 
     /**
      * Get SSL mode
+     *
      * @return bool
      */
     public function getFtpSsl()
@@ -189,6 +205,7 @@ class Data
 
     /**
      * Get passive mode
+     *
      * @return bool
      */
     public function getFtpPassive()
@@ -198,6 +215,7 @@ class Data
 
     /**
      * Is ftp enabled
+     *
      * @return bool
      */
     public function isFtpEnabled()
@@ -211,6 +229,7 @@ class Data
 
     /**
      * Tracking enabled
+     *
      * @return bool
      */
     public function getTrackingEnabled()
@@ -240,5 +259,24 @@ class Data
     public function getCatalogId()
     {
         return $this->scopeConfig->getValue(static::XML_PATH_CATALOG_ID);
+    }
+
+
+    /**
+     * @return array
+     */
+    public function getFeedTagsList()
+    {
+        $tags = trim($this->scopeConfig->getValue(static::XML_PATH_FEED_TAGS_LIST));
+        return !empty($tags) ? explode(PHP_EOL, $tags) : array();
+    }
+
+    /**
+     * @return array
+     */
+    public function getTrackingTagsList()
+    {
+        $tags = trim($this->scopeConfig->getValue(static::XML_PATH_TRACKING_TAGS_LIST));
+        return !empty($tags) ? explode(PHP_EOL, $tags) : array();
     }
 }

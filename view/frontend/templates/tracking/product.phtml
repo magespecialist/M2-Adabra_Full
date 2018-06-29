@@ -18,8 +18,10 @@
 
 $product = $block->getProduct();
 $categoryId = $block->getCategoryId();
+$tags = $block->getCustomTagsList();
 ?>
 
 <?php if ($product) : ?>
     _sbnaq.push(["<?php echo \Adspray\Adabra\Model\Tracking::TRACK_PRODUCT_VIEW ?>", "<?php echo $product->getSku() ?>", <?php echo $categoryId ?>]);
+    _sbnaq.push(["<?= \Adspray\Adabra\Model\Tracking::TRACK_TAGS_LIST ?>", "<?= $tags ?>"]);
 <?php endif; ?>

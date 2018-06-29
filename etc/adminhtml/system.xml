@@ -126,6 +126,14 @@
                 </field>
             </group>
 
+            <group id="tags" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Tags</label>
+                <field id="tags_list" translate="label comment" type="textarea" sortOrder="21" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Tags List</label>
+                    <comment>Insert the tags to export</comment>
+                </field>
+            </group>
+
         </section>
 
         <section id="adabra_tracking" showInDefault="1" showInWebsite="0" showInStore="0" sortOrder="4">
@@ -150,6 +158,13 @@
                 <field id="catalog_id" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Catalog id</label>
                     <comment>Provided by Adabra</comment>
+                </field>
+            </group>
+            <group id="tags" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Tags</label>
+                <field id="tags_list" translate="label comment" type="textarea" sortOrder="21" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Tags List</label>
+                    <comment>Insert the tags to export</comment>
                 </field>
             </group>
         </section>
