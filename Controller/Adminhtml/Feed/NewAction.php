@@ -21,40 +21,40 @@
 namespace Adspray\Adabra\Controller\Adminhtml\Feed;
 
 use Magento\Backend\App\Action;
-use Magento\Framework\App\ResponseInterface;
-use Magento\Framework\View\Result\PageFactory;
+use Magento\Backend\App\Action\Context;
+use Magento\Backend\Model\View\Result\ForwardFactory;
+use Magento\Framework\Registry;
 
-class Edit extends Action
+class NewAction extends Action
 {
-    protected $pageFactory;
+    /**
+     * @var ForwardFactory
+     */
+    protected $resultForwardFactory;
 
+    /**
+     * @param \Magento\Backend\App\Action\Context $context
+     * @param Registry $coreRegistry
+     * @param ForwardFactory $resultForwardFactory
+     */
     public function __construct(
-        Action\Context $context,
-        PageFactory $pageFactory
+        Context $context,
+        Registry $coreRegistry,
+        ForwardFactory $resultForwardFactory
     ) {
-        $this->pageFactory = $pageFactory;
-
-        parent::__construct($context);
+        $this->resultForwardFactory = $resultForwardFactory;
+        parent::__construct($context, $coreRegistry);
     }
 
     /**
-     * Dispatch request
+     * Create new CMS block
      *
-     * @return \Magento\Framework\Controller\ResultInterface|ResponseInterface
-     * @throws \Magento\Framework\Exception\NotFoundException
+     * @return \Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {
-        $id = $this->getRequest()->getParam('id');
-        $title = empty($id) ? __("New Feed") : __("Edit Feed");
-
-        /** @var \Magento\Backend\Model\View\Result\Page $result */
-        $result = $this->pageFactory->create();
-
-        $result->setActiveMenu('Adspray_Adabra::adabra_feed_list');
-        $result->addBreadcrumb($title, $title);
-        $result->getConfig()->getTitle()->prepend($title);
-
-        return $result;
+        /** @var \Magento\Framework\Controller\Result\Forward $resultForward */
+        $resultForward = $this->resultForwardFactory->create();
+        return $resultForward->forward('edit');
     }
 }

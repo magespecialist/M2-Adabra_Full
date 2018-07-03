@@ -20,10 +20,38 @@
 
 namespace Adspray\Adabra\Model\ResourceModel;
 
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
+use Magento\Framework\Model\ResourceModel\Db\Context;
+use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 
 class Feed extends AbstractDb
 {
+
+    /**
+     * @var Context
+     */
+    private $context;
+    /**
+     * @var TimezoneInterface
+     */
+    private $timezone;
+
+    /**
+     * Feed constructor.
+     * @param Context $context
+     * @param TimezoneInterface $timezone
+     * @param string|null $connectionName
+     */
+    public function __construct(
+        Context $context,
+        TimezoneInterface $timezone,
+        string $connectionName = null)
+    {
+        parent::__construct($context, $connectionName);
+        $this->timezone = $timezone;
+    }
+
     protected function _construct()
     {
         $this->_init('adabra_feed', 'adabra_feed_id');
@@ -34,14 +62,22 @@ class Feed extends AbstractDb
      * @param $feedId
      * @param $subFeedType
      * @param $status
-     * @return $this
+     * @return Feed|string
      */
     public function changeBuildStatus($feedId, $subFeedType, $status)
     {
-        $this->getConnection()->update($this->getMainTable(), [
-            'status_' . $subFeedType => $status
-        ], 'adabra_feed_id=' . intval($feedId));
-
+        $today = $this->timezone->date()->format('Y-m-d H:i:s');
+        if (!empty($subFeedType)) {
+            try {
+                $this->getConnection()->update($this->getMainTable(), [
+                    'status_' . $subFeedType => $status,
+                    'updated_at' => $today
+                ], 'adabra_feed_id = ' . (int)$feedId);
+            } catch (LocalizedException $e) {
+                return $e->getMessage();
+            }
+        }
         return $this;
     }
+
 }

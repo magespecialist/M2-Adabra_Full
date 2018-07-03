@@ -37,6 +37,7 @@
         <item name="buttons" xsi:type="array">
             <item name="back" xsi:type="string">Adspray\Adabra\Block\Adminhtml\Feed\Edit\Button\Back</item>
             <item name="save" xsi:type="string">Adspray\Adabra\Block\Adminhtml\Feed\Edit\Button\Save</item>
+            <item name="delete" xsi:type="string">Adspray\Adabra\Block\Adminhtml\Feed\Edit\Button\Delete</item>
         </item>
     </argument>
     <dataSource name="adabra_feed_form_data_source">

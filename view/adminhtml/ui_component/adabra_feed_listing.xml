@@ -26,6 +26,9 @@
             <item name="deps" xsi:type="string">adabra_feed_listing.adabra_feed_listing_data_source</item>
         </item>
         <item name="spinner" xsi:type="string">adabra_feed_listing_columns</item>
+        <item name="buttons" xsi:type="array">
+            <item name="add" xsi:type="string">Adspray\Adabra\Block\Adminhtml\Feed\Index\Button\Add</item>
+        </item>
     </argument>
     <dataSource name="adabra_feed_listing_data_source">
         <argument name="dataProvider" xsi:type="configurableObject">

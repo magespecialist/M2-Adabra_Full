@@ -48,9 +48,15 @@ class FormDataProvider extends AbstractDataProvider
         }
         $items = $this->collection->getItems();
 
-        /** @var Feed $feed */
-        foreach ($items as $feed) {
-            $this->loadedData[$feed->getId()] = $feed->getData();
+        if (!empty($items)) {
+
+            /** @var Feed $feed */
+            foreach ($items as $feed) {
+                $this->loadedData[$feed->getId()] = $feed->getData();
+            }
+
+        } else {
+            $this->loadedData = array();
         }
 
         return $this->loadedData;

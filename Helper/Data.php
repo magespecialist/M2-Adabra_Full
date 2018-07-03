@@ -25,6 +25,8 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 
 class Data
 {
+    const XML_PATH_FEED_ENABLED = 'adabra_feed/general/enabled';
+
     const XML_PATH_BATCH_SIZE = 'adabra_feed/batch_size';
     const XML_PATH_ORDER_STATES = 'adabra_feed/order/states';
 
@@ -216,6 +218,15 @@ class Data
     public function getTrackingEnabled()
     {
         return (bool) $this->scopeConfig->getValue(static::XML_PATH_TRACKING_ENABLED);
+    }
+
+    /**
+     * Feed enabled
+     * @return bool
+     */
+    public function getFeedEnabled()
+    {
+        return (bool) $this->scopeConfig->getValue(static::XML_PATH_FEED_ENABLED);
     }
 
     /**

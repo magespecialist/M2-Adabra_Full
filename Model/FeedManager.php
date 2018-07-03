@@ -23,6 +23,7 @@ namespace Adspray\Adabra\Model;
 use Adspray\Adabra\Api\Data\FeedInterface;
 use Adspray\Adabra\Api\Data\SubFeedInterface;
 use Adspray\Adabra\Api\FeedManagerInterface;
+use Adspray\Adabra\Helper\Data as DataHelper;
 use Adspray\Adabra\Helper\Filesystem;
 use Adspray\Adabra\Model\ResourceModel\Feed\Collection;
 use Adspray\Adabra\Model\ResourceModel\Feed\CollectionFactory as FeedCollectionFactory;
@@ -36,17 +37,31 @@ class FeedManager implements FeedManagerInterface
     protected $feed;
 
     protected $feedCollection = null;
+    /**
+     * @var DataHelper
+     */
+    private $dataHelper;
 
+    /**
+     * FeedManager constructor.
+     * @param Filesystem $filesystem
+     * @param FeedCollectionFactory $feedCollectionFactory
+     * @param SubFeedType $subFeedType
+     * @param FeedInterface $feed
+     * @param DataHelper $dataHelper
+     */
     public function __construct(
         Filesystem $filesystem,
         FeedCollectionFactory $feedCollectionFactory,
         SubFeedType $subFeedType,
-        FeedInterface $feed
+        FeedInterface $feed,
+        DataHelper $dataHelper
     ) {
         $this->filesystem = $filesystem;
         $this->feedCollectionFactory = $feedCollectionFactory;
         $this->subFeedType = $subFeedType;
         $this->feed = $feed;
+        $this->dataHelper = $dataHelper;
     }
 
     /**
@@ -95,6 +110,10 @@ class FeedManager implements FeedManagerInterface
      */
     public function run()
     {
+        if (!$this->dataHelper->getFeedEnabled()) {
+            return;
+        }
+
         if (!$this->filesystem->acquireLock('feed')) {
             return;
         }
