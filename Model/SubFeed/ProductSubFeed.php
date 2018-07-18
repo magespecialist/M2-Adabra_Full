@@ -366,7 +366,7 @@ class ProductSubFeed extends AbstractSubFeed implements SubFeedInterface
             $this->getVirtualField($product, 'brand'),
             $this->getVirtualField($product, 'modello'),
             $this->getVirtualField($product, 'prezzo_spedizione'),
-            $this->toCurrency($this->getPrice($product, 'base_price'), true),
+            $this->toCurrency($this->getPrice($product, 'regular_price'), true),
             $this->toCurrency($this->getPrice($product, 'final_price'), true),
             $this->getFeed()->getCurrencyCode(),
             $this->getVirtualField($product, 'info_pagamento'),
