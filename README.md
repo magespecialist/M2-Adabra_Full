@@ -1,3 +1,8 @@
+Deprecation notice
+==================
+
+*Warning:* This module is no longer maintained at this location, please go [Here](https://inside.adabra.com/source/projects/AP/repos/adabra---magento-2/browse) for latest version
+
 Official AdSpray Adabra Plugin for Magento 2
 ============================================
 
